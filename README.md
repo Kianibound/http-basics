@@ -251,3 +251,40 @@ When a client makes a `reques`t to `/profile`, the server includes the `Cache-Co
 If a subsequent request is made within the caching timeframe and the provided `ETag` matches the current `ETag`, the server responds with a `304 Not Modified` status, indicating that the client can use its cached version of the user profile.
 
 This enables efficient caching of the user profile resource, reducing the need for the server to send the complete response if the profile hasn't changed and allowing the client to utilize its cached version.
+
+
+
+## Common HTTP status codes:
+
+* `1xx` `Informational` Codes:
+
+  * `100` Continue: The server has received the initial part of the request, and the client should proceed with sending the remaining part.
+  
+* `2xx` `Success` Codes:
+
+  * `200 OK`: The request was successful, and the server has returned the requested resource.
+  * `201 Created`: The request was successful, and a new resource was created as a result.
+  * `204 No Content`: The server successfully processed the request, but no content is returned in the response.
+  
+* `3xx` `Redirection` Codes:
+
+   * `301 Moved Permanently`: The requested resource has been permanently moved to a new URL.
+   * `302 Found`: The requested resource has been temporarily moved to a different URL.
+   * `304 Not Modified`: The requested resource has not been modified since the last request, and the client can use its cached version.
+   
+* `4xx` `Client Error` Codes:
+
+   * `400 Bad Request`: The server cannot process the request due to a client error.
+   * `401 Unauthorized`: The request requires authentication. The client must provide valid credentials.
+   * `403 Forbidden`: The server understands the request, but the client does not have sufficient permissions to access the resource.
+   * `404 Not Found`: The server could not find the requested resource.
+ 
+* `5xx` `Server Error` Codes:
+
+   * `500 Internal Server Erro`r: An unexpected error occurred on the server.
+   * `502 Bad Gateway`: The server acting as a gateway received an invalid response from an upstream server.
+   * `503 Service Unavailable`: The server is temporarily unable to handle the request due to maintenance or high load.
+   * `504 Gateway Timeout`: The server acting as a gateway did not receive a timely response from an upstream server.
+
+
+ It's important to note that there are many more HTTP status codes available, each serving a specific purpose. These are just the most commonly encountered      ones.
