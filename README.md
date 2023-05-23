@@ -163,3 +163,91 @@ server.listen(3000);
 
    * Answer: HTTP is a `request-response protocol`, while WebSocket is a `bidirectional communication protocol` that provides full-duplex communication channels      over  a single `TCP` connection. WebSocket enables `real-time` communication between clients and servers, whereas `HTTP requires separate requests` for each       interaction.
 
+
+## More about `ETag`s :
+
+In HTTP, an ETag (Entity Tag) is an identifier assigned to a specific version of a resource on the server. It helps in efficient caching and enables conditional requests, allowing the server to respond with a 304 Not Modified status if the resource hasn't changed since the previous request. Here's an example to illustrate its usage:
+
+   1. Imagine you have a website that displays a user's profile information. The profile data is retrieved from a server via an HTTP request.
+
+   2. When the user initially visits their profile page, the server responds with the user's profile data and includes an ETag header. Let's say the ETag value is    "abc123" for this version of the user's profile.
+
+   3. The user continues browsing the website and makes subsequent requests to view their profile. The browser includes the ETag value received earlier in the        request's headers.
+
+   4. On receiving the subsequent request, the server compares the provided ETag value with the current ETag value of the user's profile. If they match, it means    the profile hasn't changed since the last request.
+
+   5. In the case where the ETag values match, the server can respond with a 304 Not Modified status instead of sending the entire profile data again. This saves    bandwidth and improves performance.
+
+   6. If the ETag values don't match, it means the profile has been modified on the server. In this case, the server generates a new version of the profile data,    assigns a new ETag value (e.g., "def456"), and includes it in the response. The server then sends the updated profile data to the browser.
+
+   7. By leveraging ETags, the browser can efficiently determine whether it needs to retrieve a resource from the server or if it can use a cached version. This      reduces unnecessary network traffic and optimizes the user experience.
+
+To summarize, ETags act as fingerprints or unique identifiers for resources. They enable conditional requests, allowing servers to respond with a minimal response when the resource hasn't changed, thereby reducing bandwidth usage and improving performance.
+
+Keep in mind that ETags can be implemented differently depending on the server and framework being used. Some servers generate ETags based on file timestamps or content hashes, while others may use a different approach.
+
+Code Example:
+
+```javascript
+
+const http = require('http');
+const crypto = require('crypto');
+
+// Simulated user profile data
+let userProfile = {
+  id: 1,
+  name: 'John Doe',
+  email: 'john@example.com',
+};
+
+// Generate the initial ETag for the user profile
+const initialETag = generateETag(userProfile);
+
+// Helper function to generate an ETag
+function generateETag(data) {
+  const hash = crypto.createHash('md5').update(JSON.stringify(data)).digest('hex');
+  return `"${hash}"`;
+}
+
+// Create an HTTP server
+const server = http.createServer((req, res) => {
+  if (req.url === '/profile') {
+    // Set the ETag header to the initial ETag value
+    res.setHeader('ETag', initialETag);
+
+    if (req.headers['if-none-match'] === initialETag) {
+      // If the provided ETag matches the current ETag, send a 304 Not Modified status
+      res.statusCode = 304;
+      res.end();
+    } else {
+      // If the ETags don't match, send the updated user profile
+      res.setHeader('Content-Type', 'application/json');
+      
+      // Set Cache-Control header to enable caching for 1 hour (3600 seconds)
+      res.setHeader('Cache-Control', 'public, max-age=3600');
+      
+      res.statusCode = 200;
+      res.end(JSON.stringify(userProfile));
+    }
+  } else {
+    // Handle other routes or resources
+    res.statusCode = 404;
+    res.end();
+  }
+});
+
+// Start the server
+server.listen(3000, () => {
+  console.log('Server is running on port 3000');
+});
+```
+
+In this example, we have added the `Cache-Control header` to enable caching of the user profile resource. The `Cache-Control` header provides instructions to the client and intermediaries on how to handle `caching` for the response.
+
+By setting the `Cache-Control` header to public, `max-age=3600`, we specify that the response can be cached by the client and other intermediaries for a maximum of `1 hour (3600 seconds)`.
+
+When a client makes a `reques`t to `/profile`, the server includes the `Cache-Control` header in the response, allowing the client to cache the response for subsequent requests within the specified timeframe.
+
+If a subsequent request is made within the caching timeframe and the provided `ETag` matches the current `ETag`, the server responds with a `304 Not Modified` status, indicating that the client can use its cached version of the user profile.
+
+This enables efficient caching of the user profile resource, reducing the need for the server to send the complete response if the profile hasn't changed and allowing the client to utilize its cached version.
