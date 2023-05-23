@@ -123,4 +123,43 @@ server.listen(3000);
    * Answer: `CORS` is a mechanism that allows restricted resources on a web page to be requested from another domain outside the domain from which the resource      originated. It involves adding appropriate headers to the response to control which domains are allowed to access the resource.
       
 
+* ### Q: What is the purpose of the `'User-Agent'` header in an HTTP request?
+
+   * Answer The `'User-Agent`' header provides information about the client (usually a web browser) that is making the request. It helps servers to understand the      capabilities and characteristics of the client.
+
+* ### Q: What is the `'Content-Length'` header used for?
+
+   * Answer The `'Content-Length'` header specifies the` size of the request` or `response body in bytes`. It allows the server or client to determine the length of the    data being sent or received.
+
+* ### Q: Explain the difference between `HTTP 1.0` and HTTP `1.1`.
+
+   * Answer: `HTTP 1.1` introduced persistent connections, allowing multiple requests and responses to be sent over a single connection, reducing overhead. It        also  added support for chunked transfer encoding and introduced various improvements in caching, security, and performance.
+
+* ### Q: What is the purpose of `URL encoding` in HTTP?
+
+   * Answer: `URL encoding` is used to `convert` special characters or reserved characters in a` URL` to a format that can be `safely` transmitted. It ensures         that the  URL remains valid and doesn't cause any conflicts or parsing issues.
+
+* ### Q: What is an HTTP `cookie`?
+
+   * Answer: An HTTP `cookie` is a small piece of data stored by a web browser. Cookies are sent with every subsequent request to the same domain, allowing           servers to maintain stateful `sessions` and remember `user-specific` information.
+
+* ### Q: What is the purpose of the `'Referer'` header in an HTTP request?
+
+   * Answer: The `'Referer'` (yes, it's spelled that way) header indicates the `UR`L of the previous web page from which the current request originated. It can be        useful for `tracking` and `analytics` purposes.
+
+* ### Q: What is the role of the `'Host' header` in an HTTP request?
+
+   * Answer: The `'Host' header` specifies the domain name of the server being addressed in the request. It enables hosting multiple websites on the `same IP`         address and helps the server route the request to the appropriate website.
+
+* ### Q: Explain the purpose of the `'ETag'` header in HTTP responses.
+
+   * Answer: The `'ETag' header` provides an identifier (usually a `hash`) for a specific version of a resource. It helps in efficient caching and enables             conditional  requests, allowing the server to respond with a `304 Not Modified` status if the resource hasn't changed.
+
+* ### Q: What is a `redirect` in HTTP?
+
+   * Answer: A `redirect` is a response sent by the server that instructs the client to request a different URL. This can be useful for handling moved resources,      implementing URL aliases, or redirecting users to a different page.
+
+* ### Q: What are the differences between `HTTP` and `WebSocket`?
+
+   * Answer: HTTP is a `request-response protocol`, while WebSocket is a `bidirectional communication protocol` that provides full-duplex communication channels      over  a single `TCP` connection. WebSocket enables `real-time` communication between clients and servers, whereas `HTTP requires separate requests` for each       interaction.
 
